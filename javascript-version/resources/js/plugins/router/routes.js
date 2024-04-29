@@ -9,6 +9,10 @@ export const routes = [
         component: () => import('@/pages/dashboard.vue'),
       },
       {
+        path: 'trainingCourses',
+        component: () => import('@/pages/traincourse/trainCourse.vue'),
+      },
+      {
         path: 'account-settings',
         component: () => import('@/pages/account-settings.vue'),
       },
