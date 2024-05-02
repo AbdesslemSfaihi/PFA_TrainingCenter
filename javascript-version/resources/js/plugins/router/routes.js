@@ -21,6 +21,14 @@ export const routes = [
         component: () => import('@/pages/personne/personnes.vue'),
       },
       {
+        path: 'sessions',
+        component: () => import('@/pages/session/session.vue'),
+      },
+      {
+        path: 'sessions/add',
+        component: () => import('@/pages/session/addSession.vue'),
+      },
+      {
         path: 'account-settings',
         component: () => import('@/pages/account-settings.vue'),
       },
