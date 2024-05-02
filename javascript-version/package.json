@@ -20,6 +20,7 @@
     "pinia": "^2.1.7",
     "prismjs": "^1.29.0",
     "roboto-fontface": "^0.10.0",
+    "sweetalert2": "^11.10.8",
     "vue": "^3.3.4",
     "vue-flatpickr-component": "11.0.3",
     "vue-prism-component": "^2.0.0",

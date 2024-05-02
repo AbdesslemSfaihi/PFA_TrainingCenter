@@ -1,3 +1,5 @@
+import Addsubject from '@/pages/subjects/Addsubject.vue';
+
 export const routes = [
   { path: '/', redirect: '/dashboard' },
   {
@@ -9,9 +11,24 @@ export const routes = [
         component: () => import('@/pages/dashboard.vue'),
       },
       {
+        path: 'subjects',
+        component: () => import('@/pages/subjects/subjects.vue'),
+      },
+      {
+        name: "Addsubject",
+        path: "/addsubject",
+        component: Addsubject
+      },
+
+
+
+
+
+      {
         path: 'account-settings',
         component: () => import('@/pages/account-settings.vue'),
       },
+
       {
         path: 'typography',
         component: () => import('@/pages/typography.vue'),
@@ -53,3 +70,6 @@ export const routes = [
     ],
   },
 ]
+
+
+
