@@ -10,12 +10,12 @@
             <h1>Training Course</h1>
             <VCol cols="12">
                 <VBtn class="me-4">
-                    <router-link to="/trainingCourses/add">
+                    <router-link to="/trainingCourses/add" class="router-link-custom">
                         <IconBtn size="small">
                             <VIcon icon="ri-add-circle-fill" />
-                        </IconBtn>Add a new training course
+                        </IconBtn>
+                        Add a new training course
                     </router-link>
-                    <!-- Add a new training course -->
                 </VBtn>
             </VCol>
             <VCard>
@@ -238,4 +238,9 @@ onMounted(() => {
 
 </script>
 
-<style></style>
+<style>
+.router-link-custom {
+    color: white;
+    /* Set the desired text color */
+}
+</style>
