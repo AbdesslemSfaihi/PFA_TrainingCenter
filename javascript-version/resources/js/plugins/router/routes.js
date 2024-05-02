@@ -15,6 +15,8 @@ export const routes = [
       {
         path: 'trainingCourses/add',
         component: () => import('@/pages/traincourse/addTrainCourse.vue'),
+        path: 'personnes',
+        component: () => import('@/pages/personne/personnes.vue'),
       },
       {
         path: 'account-settings',
