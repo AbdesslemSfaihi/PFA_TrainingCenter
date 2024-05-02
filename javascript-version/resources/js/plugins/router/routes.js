@@ -9,12 +9,15 @@ export const routes = [
         component: () => import('@/pages/dashboard.vue'),
       },
       {
+<<<<<<< HEAD
         path: 'trainingCourses',
         component: () => import('@/pages/traincourse/trainCourse.vue'),
       },
       {
         path: 'trainingCourses/add',
         component: () => import('@/pages/traincourse/addTrainCourse.vue'),
+=======
+>>>>>>> e362d7505b7e49d4f1be3d1d0b1b726e4a206c01
         path: 'personnes',
         component: () => import('@/pages/personne/personnes.vue'),
       },
