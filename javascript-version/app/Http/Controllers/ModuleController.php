@@ -12,7 +12,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        $modules = Module::with('trainingcourse_id')->get();
+        $modules = Module::with('trainingcourse')->get();
         return $modules;
     }
 
