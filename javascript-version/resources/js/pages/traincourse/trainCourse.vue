@@ -8,7 +8,16 @@
         </div>
         <div v-else>
             <h1>Training Course</h1>
-            <br />
+            <VCol cols="12">
+                <VBtn class="me-4">
+                    <router-link to="/trainingCourses/add">
+                        <IconBtn size="small">
+                            <VIcon icon="ri-add-circle-fill" />
+                        </IconBtn>Add a new training course
+                    </router-link>
+                    <!-- Add a new training course -->
+                </VBtn>
+            </VCol>
             <VCard>
                 <VDataTable :headers="headers" :items="trainCourses" :items-per-page="10" class="text-no-wrap">
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
