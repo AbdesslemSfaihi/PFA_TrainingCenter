@@ -16,12 +16,12 @@
                     <VRow>
                         <VCol cols="12">
                             <VTextField v-model="trainCourse.name" prepend-inner-icon=" ri-artboard-line"
-                                label="Training Course Name" placeholder="Front end Full Course" />
+                                label="Training Course Name" placeholder="Front end Full Course" required />
                         </VCol>
 
                         <VCol cols="12">
                             <VTextField v-model="trainCourse.period" prepend-inner-icon="ri-timer-line"
-                                label="Training Course Period" placeholder="ex. 5 months" />
+                                label="Training Course Period" placeholder="ex. 5 months" required />
                         </VCol>
 
                         <VCol cols="12">
