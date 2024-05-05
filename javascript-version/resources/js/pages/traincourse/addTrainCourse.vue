@@ -1,9 +1,11 @@
 <template>
     <div>
         <div style="display: flex; align-items: center;">
-            <IconBtn size="medium" style="margin-right: 8px;" class="red-icon">
-                <VIcon icon="ri-arrow-left-circle-line" />
-            </IconBtn>
+            <router-link to="/trainingCourses" class="router-link-cancel">
+                <IconBtn size="medium" style="margin-right: 8px;" class="red-icon">
+                    <VIcon icon="ri-arrow-left-circle-line" />
+                </IconBtn>
+            </router-link>
             <h1>
                 Add a new Training Course
             </h1>

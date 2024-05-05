@@ -2,9 +2,7 @@
     <div>
         <!-- <div v-if="isLoading">Loading...</div> -->
         <div v-if="isLoading" class="text-center">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+            <VProgressCircular :size="30" width="3" color="primary" indeterminate />
         </div>
         <div v-else>
             <h1>Training Course</h1>
