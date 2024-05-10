@@ -15,15 +15,18 @@ export const routes = [
         component: () => import('@/pages/subjects/subjects.vue'),
       },
       {
+        path: 'modules',
+        component: () => import('@/pages/modules/modules.vue'),
+      },
+      {
         name: "Addsubject",
         path: "/addsubject",
         component: Addsubject
       },
-
-
-
-
-
+      {
+        path: 'addmodule',
+        component: () => import('@/pages/modules/Addmodule.vue')
+      },
       {
         path: 'account-settings',
         component: () => import('@/pages/account-settings.vue'),

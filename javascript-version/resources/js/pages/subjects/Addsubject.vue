@@ -1,49 +1,91 @@
 <template>
-  <div class="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-    <h4 align="center">Add Subject</h4>
-    <form @submit.prevent="addSubject">
-
-      <div class="row">
-        <div class="col-md-6">
-          <label for="id" class="form-label">ID</label>
-          <input type="text" class="form-control" id="id" v-model="subject.id">
-        </div>
-        <div class="col-md-6 ms-auto">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" v-model="subject.Name">
-        </div>
+  <div>
+      <div style="display: flex; align-items: center;">
+          <router-link to="/subjects" class="router-link-cancel">
+              <IconBtn size="medium" style="margin-right: 8px;" class="red-icon">
+                  <VIcon icon="ri-arrow-left-circle-line" />
+              </IconBtn>
+          </router-link>
+          <h1>
+              Add a new Subject
+          </h1>
       </div>
-      <br/>
-      <button type="submit" class="btn btn-outline-primary">
-        <i class="fa-solid fa-floppy-disk"></i> Enregister
-      </button>
-      <router-link to="/subjects" class="btn btn-outline-danger mx-2">
-        <i class="fa-solid fa-xmark"></i> Cancel
-      </router-link>
-    </form>
+
+      <br />
+      <VCard>
+          <VCardText>
+              <VForm @submit.prevent="addSubject">
+                  <VRow>
+                      <VCol cols="12">
+                          <VTextField v-model="subject.name" prepend-inner-icon=" ri-artboard-line"
+                              label="Subject Name" placeholder="Front end Full subject" required />
+                      </VCol>
+
+                    
+
+                      <VCol cols="12">
+                          <VBtn type="submit" class="me-4">
+                              Add new
+                          </VBtn>
+                          <VBtn color="secondary">
+                              <router-link to="/subjects" class="router-link-cancel">
+                                  Cancel
+                              </router-link>
+                          </VBtn>
+                      </VCol>
+                  </VRow>
+              </VForm>
+          </VCardText>
+      </VCard>
   </div>
 </template>
-
 <script setup>
-import axios from 'axios';
-import { ref } from "vue";
+import axios from "axios";
+import Swal from 'sweetalert2';
+import { onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
-
-const router = useRouter();
 const subject = ref({
-  id: "",
-  Name: ""
+  name: ""
 });
-
+const router = useRouter();
 const addSubject = async () => {
-  try {
-    await axios.post("http://localhost:8000/api/subjects/", subject.value);
-    router.push({ name: 'subjects' });
-  } catch (error) {
-    console.error(error);
+  console.log(subject.value)
+  if (subject.value.name == "" ) {
+      Swal.fire({
+          title: "Error!",
+          text: "Please fill all the fields",
+          icon: "error"
+      });
+      return;
   }
-};
-</script>
+  else {
+      await axios.post("http://localhost:8000/api/subjects", subject.value)
+          .then(res => {
+              // console.log("Subject added successfully")
+              Swal.fire({
+                  title: "Good job!",
+                  text: "a subject was added successfully!",
+                  icon: "success"
+              });
+              router.push('/subjects');
+          })
+          .catch(erreur => {
+              console.log(error)
+          })
+  }
 
-<style scoped>
+}
+
+onMounted(() => {
+
+});
+</script>
+<style>
+.router-link-cancel {
+  color: white;
+}
+
+.red-icon {
+  color: red;
+}
 </style>

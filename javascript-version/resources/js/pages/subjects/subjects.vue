@@ -1,12 +1,21 @@
 <template>
     <div>
-      <div v-if="isLoading" class="text-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+     <!-- <div v-if="isLoading">Loading...</div> -->
+        <div v-if="isLoading" class="text-center">
+            <VProgressCircular :size="30" width="3" color="primary" indeterminate />
       </div>
       <div v-else>
         <h1>Subject</h1>
+        <VCol cols="12">
+                <VBtn class="me-4">
+                    <router-link to="/addsubject" class="router-link-custom">
+                        <IconBtn size="small">
+                            <VIcon icon="ri-add-circle-fill" />
+                        </IconBtn>
+                        Add a new subject
+                    </router-link>
+                </VBtn>
+            </VCol>
         <br />
         <VCard>
           <!-- Datatable -->
@@ -90,10 +99,11 @@
   </template>
   
   <script setup>
-  import axios from 'axios';
+import axios from 'axios';
 import Swal from 'sweetalert2';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+
   
   const subjects = ref([]);
   const isLoading = ref(true);
