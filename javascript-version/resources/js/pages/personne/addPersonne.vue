@@ -1,8 +1,12 @@
 <template>
+  <VCard class="custom-card">
     <VForm @submit.prevent>
       <VRow>
         <VCol cols="12">
           <div class="">
+            Select Type : 
+            <br>
+          
             <VRadioGroup v-model="radioGroup">
               <VRadio :label="'Trainer'" value="trainer" />
               <VRadio :label="'Trainee'" value="trainee" />
@@ -11,15 +15,6 @@
         </VCol>
         <VCol cols="4">
           <VTextField v-model="name" prepend-inner-icon="ri-user-line" label="Name" />
-        </VCol>
-        <VCol cols="4">
-          <datepicker placeholder="Select Date" />
-      <code>
-          &lt;datepicker placeholder="Select Date"&gt;&lt;/datepicker&gt;
-      </code>
-        </VCol>
-        <VCol cols="4">
-          <VTextField v-model="birthdate" prepend-inner-icon="ri-user-line" label="Birthdate" />
         </VCol>
         <VCol cols="4">
           <VTextField v-model="email" prepend-inner-icon="ri-user-line" label="Email" />
@@ -33,6 +28,9 @@
         <VCol cols="4">
           <VTextField v-model="image" prepend-inner-icon="ri-image-line" label="Image" />
         </VCol>
+        <VCol cols="12">
+          <v-date-picker v-model="birthdate" label="Birthdate" style="width: 40%;"></v-date-picker>
+        </VCol>
         <VCol cols="4">
           <VBtn @click="addItem" class="me-4">
             Add
@@ -40,22 +38,27 @@
         </VCol>
       </VRow>
     </VForm>
-  </template>
+  </VCard>
+</template>
   
   <script setup>
-  import axios from 'axios';
+  
+import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+
 
 const router = useRouter(); 
   const radioGroup = ref('');
   const name = ref('');
-  const birthdate = ref('');
+  const birthdate = ref(null);  
   const email = ref('');
   const password = ref('');
   const phone = ref('');
   const image = ref('');
   
+ 
+
   // Function to add a new person to the database
   const addPerson = async (personData, personType) => {
     let endpoint = '';
@@ -86,7 +89,7 @@ const router = useRouter();
   const addItem = async () => {
     const newItem = {
       name: name.value,
-      birthdate: birthdate.value,
+      birthdate: birthdate.value ? new Date(birthdate.value) : null,
       email: email.value,
       password: password.value,
       phone: phone.value,
@@ -95,5 +98,16 @@ const router = useRouter();
   
     await addPerson(newItem, radioGroup.value);
   };
+  const formatDate = (date) => {
+  if (!date) return null; // Return null if date is empty
+
+  const formattedDate = new Date(date);
+  return formattedDate.toISOString().slice(0, 10);
+};
   </script>
+  <style lang="scss">
+  .custom-card {
+  padding: 20px;
+}
+  </style>
   

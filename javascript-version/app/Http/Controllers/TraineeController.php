@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Trainee;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TraineeController extends Controller
 {
@@ -23,7 +24,7 @@ class TraineeController extends Controller
     {
         $trainee = new Trainee([
             'name' => $request->input('name'),
-            'birthdate' => $request->input('birthdate'),
+            'birthdate' => Carbon::parse($request->birthdate),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
             'phone' => $request->input('phone'),
