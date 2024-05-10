@@ -9,72 +9,61 @@
                     <VIcon icon="ri-arrow-left-circle-line" />
                 </IconBtn>
             </router-link>
-            <h1>
-                Add a new Session
-            </h1>
+            <h1>Add a new Session</h1>
         </div>
-
         <br />
         <VCard>
             <VCardText>
                 <VForm @submit.prevent="addSession">
-                    <VRow>
-
-                        <!-- Training course -->
-                        <VCol cols="12">
-                            <v-select prepend-icon="ri-artboard-line" :items="trainCourses"
-                                v-model="session.trainingcourse_id" item-title="name" item-value="id"
-                                label="Training Course" placeholder="Select Training Course" />
-                        </VCol>
-
-                        <!-- Session name  -->
-                        <VCol cols="12">
-                            <VTextField v-model="session.name" prepend-inner-icon="ri-presentation-line"
-                                label="Session Name" placeholder="Summer Session" />
-                        </VCol>
-
-                        <!-- Session starting date -->
-                        <AppDateTimePicker v-model="session.startingDate" label="Select a starting date"
-                            placeholder="Select date" />
-
-                        <VCol cols="12">
-                            <VTextField v-model="session.startingDate" prepend-inner-icon="ri-calendar-line"
-                                label="Starting Date" placeholder="2021-12-31" />
-                        </VCol>
-
-                        <!-- Initial price -->
-                        <VCol cols="12">
-                            <VTextField v-model="session.initialPrice" label="Price" prefix="DT" type="number"
-                                prepend-inner-icon="ri-money-dollar-circle-line" placeholder="2000" min="0" />
-                        </VCol>
-                        <!-- Discount -->
-                        <VCol cols="2" sm="1">
-                            <VCheckbox v-model="isInputEnabled" />
-                        </VCol>
-
-                        <VCol cols="10" sm="11">
-                            <VTextField :disabled="!isInputEnabled" label="Discount %" type="number" min="0" max="100"
-                                placeholder="Discount" prepend-inner-icon="ri-discount-percent-line"
-                                v-model="session.discount" default="0" />
-                        </VCol>
-                        <VCol cols="12" v-if="isInputEnabled">
-                            <VIcon icon="ri-price-tag-2-line" />
-
-                            Price after discount: DT {{ session.initialPrice - (session.initialPrice * session.discount
-                                /
-                                100) }}
-                        </VCol>
-                        <VCol cols="12">
-                            <VBtn type="submit" class="me-4">
-                                Add new
-                            </VBtn>
-                            <VBtn color="secondary">
-                                <router-link to="/sessions" class="router-link-cancel">
-                                    Cancel
-                                </router-link>
-                            </VBtn>
-                        </VCol>
-                    </VRow>
+                    <div class="form-container">
+                        <!-- Left side -->
+                        <div class="left-side">
+                            <VRow>
+                                <!-- Training course -->
+                                <VCol cols="12">
+                                    <v-select prepend-icon="ri-artboard-line" :items="trainCourses"
+                                        v-model="session.trainingcourse_id" item-title="name" item-value="id"
+                                        label="Training Course" placeholder="Select Training Course" />
+                                </VCol>
+                                <!-- Session name  -->
+                                <VCol cols="12">
+                                    <VTextField v-model="session.name" prepend-inner-icon="ri-presentation-line"
+                                        label="Session Name" placeholder="Summer Session" />
+                                </VCol>
+                                <!-- Initial price -->
+                                <VCol cols="12">
+                                    <VTextField v-model="session.initialPrice" label="Price" prefix="DT" type="number"
+                                        prepend-inner-icon="ri-money-dollar-circle-line" placeholder="2000" min="0" />
+                                </VCol>
+                                <!-- Discount -->
+                                <VCol cols="2" sm="1">
+                                    <VCheckbox v-model="isInputEnabled" />
+                                </VCol>
+                                <VCol cols="10" sm="11">
+                                    <VTextField :disabled="!isInputEnabled" label="Discount %" type="number" min="0"
+                                        max="100" placeholder="Discount" prepend-inner-icon="ri-discount-percent-line"
+                                        v-model="session.discount" default="0" />
+                                </VCol>
+                                <VCol cols="12" v-if="isInputEnabled">
+                                    <VIcon icon="ri-price-tag-2-line" />
+                                    Price after discount: DT {{ session.initialPrice - (session.initialPrice *
+                                        session.discount / 100) }}
+                                </VCol>
+                            </VRow>
+                        </div>
+                        <!-- Right side -->
+                        <div class="right-side">
+                            <VCol cols="12">
+                                <v-date-picker title="Starting date"></v-date-picker>
+                            </VCol>
+                        </div>
+                    </div>
+                    <VCol cols="12">
+                        <VBtn type="submit" class="me-4">Add new</VBtn>
+                        <VBtn color="secondary">
+                            <router-link to="/sessions" class="router-link-cancel">Cancel</router-link>
+                        </VBtn>
+                    </VCol>
                 </VForm>
             </VCardText>
         </VCard>
@@ -85,11 +74,10 @@ import axios from "axios";
 import { ref, onMounted } from "vue";
 import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router';
+import { VDatePicker } from "vuetify/lib/components/index.mjs";
 
-const now = new Date();
-const currentMonth = now.toLocaleString('default', { month: '2-digit' })
-const currentYear = now.getFullYear()
-const currentDay = now.toLocaleString('default', { day: '2-digit' })
+
+
 const isInputEnabled = ref(false)
 const isLoading = ref(true)
 const session = ref({
@@ -150,8 +138,10 @@ const addSession = async () => {
 
 }
 
+
 onMounted(() => {
     getTrainingCourses();
+
 });
 </script>
 <style>
@@ -167,5 +157,22 @@ onMounted(() => {
 
 .red-icon {
     color: red;
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
