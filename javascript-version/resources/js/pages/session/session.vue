@@ -1,30 +1,37 @@
 <template>
     <div>
-        <!-- <div v-if="isLoading">Loading...</div> -->
         <div v-if="isLoading" class="text-center">
             <VProgressCircular :size="30" width="3" color="primary" indeterminate />
         </div>
         <div v-else>
-            <h1>Training Course</h1>
+            <h1>Session</h1>
             <VCol cols="12">
                 <VBtn class="me-4">
-                    <router-link to="/trainingCourses/add" class="router-link-custom">
+                    <router-link to="/sessions/add" class="router-link-custom">
                         <IconBtn size="small">
                             <VIcon icon="ri-add-circle-fill" />
                         </IconBtn>
-                        Add a new training course
+                        Add a new session
                     </router-link>
                 </VBtn>
             </VCol>
             <VCard>
-                <VDataTable :headers="headers" :items="trainCourses" :items-per-page="10" class="text-no-wrap">
+                <VDataTable :headers="headers" :items="sessions" :items-per-page="10" class="text-no-wrap">
+                    <!-- eslint-disable-next-line vue/valid-v-slot -->
+                    <template #item.trainingcourse_id="{ item }">
+                        <div>{{ getTrainingCourseName(item.trainingcourse_id) }}</div>
+                    </template>
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template #item.name="{ item }">
                         <div>{{ item.name }}</div>
                     </template>
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
-                    <template #item.period="{ item }">
-                        <div>{{ item.period }}</div>
+                    <template #item.date="{ item }">
+                        <div>{{ item.date }}</div>
+                    </template>
+                    <!-- eslint-disable-next-line vue/valid-v-slot -->
+                    <template #item.price="{ item }">
+                        <div>{{ item.price }}</div>
                     </template>
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template #item.id="{ item }">
@@ -118,12 +125,20 @@ const defaultItem = ref({
 })
 const headers = [
     {
-        title: 'NAME',
+        title: 'TRAINING COURSE NAME',
+        key: 'trainingcourse_id',
+    },
+    {
+        title: 'SESSION NAME',
         key: 'name',
     },
     {
-        title: 'PERIOD',
-        key: 'period',
+        title: 'DATE',
+        key: 'startingDate',
+    },
+    {
+        title: 'PRICE (DT)',
+        key: 'initialPrice',
     },
     {
         title: 'ACTIONS',
@@ -142,17 +157,34 @@ const deleteDialog = ref(false);
 
 
 const trainCourses = ref([]);
+const sessions = ref([]);
+
+const getSessions = async () => {
+    try {
+        await axios.get('http://localhost:8000/api/sesses').then((response) => {
+            console.log(response.data);
+            sessions.value = response.data;
+            isLoading.value = false;
+        });
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 const getTrainingCourses = async () => {
     try {
         await axios.get('http://localhost:8000/api/trainingcourses').then((response) => {
             console.log(response.data);
             trainCourses.value = response.data;
-            isLoading.value = false;
         });
     } catch (error) {
         console.error(error);
     }
+};
+
+const getTrainingCourseName = (trainingCourseId) => {
+    const trainingCourse = trainCourses.value.find(course => course.id === trainingCourseId);
+    return trainingCourse ? trainingCourse.name : '';
 };
 
 // Edit methods 
@@ -181,10 +213,10 @@ const edit = () => {
         // console.log(editedIndex.value);
         axios.put(`http://localhost:8000/api/trainingcourses/${editedIndex.value}`, editedItem.value).then(() => {
             editDialog.value = false
-            getTrainingCourses();
+            getSessions();
             Swal.fire({
                 title: "Good job!",
-                text: "This training course has been successfully changed!",
+                text: "This session has been successfully changed!",
                 icon: "success"
             });
         })
@@ -214,10 +246,10 @@ const deleteItem = async (item) => {
         if (result.isConfirmed) {
             try {
                 axios.delete(`http://localhost:8000/api/trainingcourses/${editedIndex.value}`).then(() => {
-                    getTrainingCourses();
+                    getSessions();
                     Swal.fire({
                         title: "Deleted!",
-                        text: "This training course has been deleted.",
+                        text: "This session course has been deleted.",
                         icon: "success"
                     });
                 })
@@ -231,6 +263,7 @@ const deleteItem = async (item) => {
 
 
 onMounted(() => {
+    getSessions();
     getTrainingCourses();
 });
 

@@ -31,4 +31,10 @@ class Sess extends Model
     {
         return $this->hasMany(Seance::class);
     }
+
+    public function trainingCourses()
+    {
+        return $this->belongsTo(TrainingCourse::class);
+    }
+
 }
