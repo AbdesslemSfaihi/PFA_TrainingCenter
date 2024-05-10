@@ -13,6 +13,12 @@
           <VTextField v-model="name" prepend-inner-icon="ri-user-line" label="Name" />
         </VCol>
         <VCol cols="4">
+          <datepicker placeholder="Select Date" />
+      <code>
+          &lt;datepicker placeholder="Select Date"&gt;&lt;/datepicker&gt;
+      </code>
+        </VCol>
+        <VCol cols="4">
           <VTextField v-model="birthdate" prepend-inner-icon="ri-user-line" label="Birthdate" />
         </VCol>
         <VCol cols="4">
