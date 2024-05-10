@@ -25,7 +25,32 @@ export const routes = [
       },
       {
         path: 'addmodule',
-        component: () => import('@/pages/modules/Addmodule.vue')
+        component: () => import('@/pages/modules/Addmodule.vue'),
+      },
+      {
+        path: 'trainingCourses',
+        component: () => import('@/pages/traincourse/trainCourse.vue'),
+      },
+
+      {
+        path: 'trainingCourses/add',
+        component: () => import('@/pages/traincourse/addTrainCourse.vue'),
+      },
+      {
+        path: 'personnes',
+        component: () => import('@/pages/personne/personnes.vue'),
+      },
+      {
+        path: 'personnes/add',
+        component: () => import('@/pages/personne/addPersonne.vue'),
+      },
+      {
+        path: 'sessions',
+        component: () => import('@/pages/session/session.vue'),
+      },
+      {
+        path: 'sessions/add',
+        component: () => import('@/pages/session/addSession.vue'),
       },
       {
         path: 'account-settings',

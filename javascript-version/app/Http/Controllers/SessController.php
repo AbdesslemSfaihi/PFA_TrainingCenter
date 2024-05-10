@@ -12,7 +12,7 @@ class SessController extends Controller
      */
     public function index()
     {
-        $sesses = Sess::with('trainingcourse_id')->get();
+        $sesses = Sess::with('trainingCourses')->get();
         return $sesses;
     }
 
