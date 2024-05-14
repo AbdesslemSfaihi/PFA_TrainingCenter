@@ -15,27 +15,35 @@
         <VCard>
             <VCardText>
                 <VForm @submit.prevent="addSession">
-                    <div class="form-container">
-                        <!-- Left side -->
-                        <div class="left-side">
+                    <VRow>
+                        <VCol cols="6">
                             <VRow>
-                                <!-- Training course -->
                                 <VCol cols="12">
                                     <v-select prepend-icon="ri-artboard-line" :items="trainCourses"
                                         v-model="session.trainingcourse_id" item-title="name" item-value="id"
                                         label="Training Course" placeholder="Select Training Course" />
                                 </VCol>
-                                <!-- Session name  -->
+                            </VRow>
+                            <VRow>
                                 <VCol cols="12">
                                     <VTextField v-model="session.name" prepend-inner-icon="ri-presentation-line"
                                         label="Session Name" placeholder="Summer Session" />
                                 </VCol>
-                                <!-- Initial price -->
+                            </VRow>
+                            <VRow>
+                                <VCol cols="12">
+                                    <VTextField prepend-inner-icon="ri-calendar-line" placeholder="YYYY-MM-DD"
+                                        label="Starting Date" v-model="session.startingDate" readonly />
+                                </VCol>
+
+                            </VRow>
+                            <VRow>
                                 <VCol cols="12">
                                     <VTextField v-model="session.initialPrice" label="Price" prefix="DT" type="number"
                                         prepend-inner-icon="ri-money-dollar-circle-line" placeholder="2000" min="0" />
                                 </VCol>
-                                <!-- Discount -->
+                            </VRow>
+                            <VRow>
                                 <VCol cols="2" sm="1">
                                     <VCheckbox v-model="isInputEnabled" />
                                 </VCol>
@@ -44,26 +52,29 @@
                                         max="100" placeholder="Discount" prepend-inner-icon="ri-discount-percent-line"
                                         v-model="session.discount" default="0" />
                                 </VCol>
-                                <VCol cols="12" v-if="isInputEnabled">
+                            </VRow>
+                            <VRow v-if="isInputEnabled">
+                                <VCol cols="12">
                                     <VIcon icon="ri-price-tag-2-line" />
                                     Price after discount: DT {{ session.initialPrice - (session.initialPrice *
                                         session.discount / 100) }}
                                 </VCol>
                             </VRow>
-                        </div>
-                        <!-- Right side -->
-                        <div class="right-side">
                             <VCol cols="12">
-                                <v-date-picker title="Starting date"></v-date-picker>
+                                <VBtn type="submit" class="me-4">Add new</VBtn>
+                                <VBtn color="secondary">
+                                    <router-link to="/sessions" class="router-link-cancel">Cancel</router-link>
+                                </VBtn>
                             </VCol>
-                        </div>
-                    </div>
-                    <VCol cols="12">
-                        <VBtn type="submit" class="me-4">Add new</VBtn>
-                        <VBtn color="secondary">
-                            <router-link to="/sessions" class="router-link-cancel">Cancel</router-link>
-                        </VBtn>
-                    </VCol>
+                        </VCol>
+                        <VCol cols="6">
+                            <VRow>
+                                <v-date-picker title="Starting date" :min="currentDate" elevation="15"
+                                    :value="session.startingDate" format="yyyy-MM-dd"
+                                    @input="fixDate($event, 'startingDate')"></v-date-picker>
+                            </VRow>
+                        </VCol>
+                    </VRow>
                 </VForm>
             </VCardText>
         </VCard>
@@ -75,9 +86,10 @@ import { ref, onMounted } from "vue";
 import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router';
 import { VDatePicker } from "vuetify/lib/components/index.mjs";
+import moment from 'moment';
+import { useDate } from 'vuetify'
 
-
-
+const currentDate = new Date().toISOString().slice(0, 10);
 const isInputEnabled = ref(false)
 const isLoading = ref(true)
 const session = ref({
@@ -87,15 +99,8 @@ const trainCourses = ref([])
 const trainCoursesNames = ref([])
 const router = useRouter();
 
-// const getTrainingCourseName = (id) => {
-//     return trainCourses.value.find((course) => course.id == id).name;
-// }
-// const getTrainingCourseName = (id) => {
-//     const numericId = Number(id); // Convert id to number type
-//     console.log('id: ' + numericId);
-//     console.log('trainCourse name : ' + trainCourses.value.find((course) => course.id === numericId)?.name);
-//     return trainCourses.value.find((course) => course.id === numericId)?.name;
-// }
+const date = useDate()
+
 
 const getTrainingCourses = async () => {
     try {
@@ -138,6 +143,13 @@ const addSession = async () => {
 
 }
 
+const fixDate = (event) => {
+    // Format the date and update the session startingDate
+    // session.startingDate = format('YYYY-MM-DD');
+    // const startingDate = moment(event).format(startingDate, 'keyboardDate')
+    session.startingDate = moment(event).format('YYYY-MM-DD');
+    console.log(session.startingDate);
+};
 
 onMounted(() => {
     getTrainingCourses();
@@ -157,22 +169,5 @@ onMounted(() => {
 
 .red-icon {
     color: red;
-}
-
-.form-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.left-side {
-    display: flex;
-    flex-direction: column;
-}
-
-.right-side {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 </style>
