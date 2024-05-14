@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "sweetalert2": "^11.10.8"
+    "chart.js": "^4.4.2",
+    "sweetalert2": "^11.10.8",
+    "vue-chartjs": "^5.3.1"
   }
 }
