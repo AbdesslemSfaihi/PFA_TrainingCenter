@@ -54,10 +54,15 @@
                                 </VCol>
                             </VRow>
                             <VRow v-if="isInputEnabled">
+
                                 <VCol cols="12">
-                                    <VIcon icon="ri-price-tag-2-line" />
-                                    Price after discount: DT {{ session.initialPrice - (session.initialPrice *
-                                        session.discount / 100) }}
+                                    Price With Discount
+                                    <VTextField prepend-inner-icon="ri-price-tag-2-line"
+        prefix="DT"
+                                        v-model="session.priceWD" readonly >
+                                    
+                                    {{ session.initialPrice - (session.initialPrice*session.discount / 100) }}
+                                    </VTextField>
                                 </VCol>
                             </VRow>
                             <VCol cols="12">
@@ -82,18 +87,18 @@
 </template>
 <script setup>
 import axios from "axios";
-import { ref, onMounted } from "vue";
-import Swal from 'sweetalert2';
-import { useRouter } from 'vue-router';
-import { VDatePicker } from "vuetify/lib/components/index.mjs";
 import moment from 'moment';
-import { useDate } from 'vuetify'
+import Swal from 'sweetalert2';
+import { onMounted, ref } from "vue";
+import { useRouter } from 'vue-router';
+import { useDate } from 'vuetify';
+import { VDatePicker } from "vuetify/lib/components/index.mjs";
 
 const currentDate = new Date().toISOString().slice(0, 10);
 const isInputEnabled = ref(false)
 const isLoading = ref(true)
 const session = ref({
-    name: "", startingDate: "", initialPrice: "", discount: "", priceWD: "", trainingcourse_id: ""
+    name: "", startingDate: "", initialPrice: "", discount: "0", priceWD: "", trainingcourse_id: ""
 });
 const trainCourses = ref([])
 const trainCoursesNames = ref([])

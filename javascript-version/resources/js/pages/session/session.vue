@@ -58,17 +58,41 @@
                 <VCardText>
                     <VContainer>
                         <VRow>
+                            <VCol cols="12">
+                                    <v-select prepend-icon="ri-artboard-line" :items="trainCourses"
+                                        v-model="editedItem.trainingcourse_id" item-title="name" item-value="id"
+                                        label="Training Course" placeholder="Select Training Course" />
+                                </VCol>
                             <!-- name -->
                             <VCol cols="12">
-                                <VTextField prepend-inner-icon="ri-artboard-line" v-model="editedItem.name"
-                                    label="Training Course Name" />
+                                    <VTextField v-model="editedItem.name" prepend-inner-icon="ri-presentation-line"
+                                        label="Session Name" placeholder="Summer Session" />
                             </VCol>
 
-                            <!-- period -->
                             <VCol cols="12">
-                                <VTextField prepend-inner-icon="ri-timer-line" v-model="editedItem.period"
-                                    label="Period" />
+                                    <VTextField prepend-inner-icon="ri-calendar-line" placeholder="YYYY-MM-DD"
+                                        label="Starting Date" v-model="editedItem.startingDate" />
                             </VCol>
+
+                            <VCol cols="12">
+                                    <VTextField v-model="editedItem.initialPrice" label="Price" prefix="DT" type="number"
+                                        prepend-inner-icon="ri-money-dollar-circle-line" placeholder="2000" min="0" />
+                            </VCol>
+
+                            <VCol cols="2" sm="1">
+                                    <VCheckbox v-model="isInputEnabled" />
+                                </VCol>
+                                <VCol cols="10" sm="11">
+                                    <VTextField :disabled="!isInputEnabled" label="Discount %" type="number" min="0"
+                                        max="100" placeholder="Discount" prepend-inner-icon="ri-discount-percent-line"
+                                        v-model="editedItem.discount" default="0" />
+                                </VCol>
+                                <VCol cols="12" v-if="isInputEnabled">
+                                    Price With Discount
+                                    <VTextField prepend-inner-icon="ri-price-tag-2-line" prefix="DT" v-model="editedItem.priceWD"  readonly >                      
+                                    {{ editedItem.priceWD = editedItem.initialPrice - (editedItem.initialPrice*editedItem.discount / 100) }}
+                                    </VTextField>
+                                </VCol>
                         </VRow>
                     </VContainer>
                 </VCardText>
@@ -111,17 +135,21 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import { useRouter, useRoute } from 'vue-router';
 import Swal from 'sweetalert2';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 
 const defaultItem = ref({
     responsiveId: '',
     id: -1,
     name: '',
-    period: '',
+    startingDate: '', 
+    initialPrice: '', 
+    discount: 0, 
+    priceWD: "", 
+    trainingcourse_id: ""
 })
 const headers = [
     {
@@ -155,6 +183,7 @@ const editedIndex = ref(-1);
 const editDialog = ref(false);
 const deleteDialog = ref(false);
 
+const isInputEnabled = ref(true)
 
 const trainCourses = ref([]);
 const sessions = ref([]);
@@ -199,6 +228,9 @@ const editItem = item => {
 
     // console.log("-------------" + editedIndex.value);
     // console.log("-------------" + editedItem.value);
+    console.log(editedItem.value.discount)
+    isInputEnabled.value = editedItem.value.discount !== 0
+    console.log(isInputEnabled.value)
 }
 
 const close = () => {
@@ -211,7 +243,7 @@ const edit = () => {
     if (editedIndex.value > -1) {
         // console.log(editedItem.value);
         // console.log(editedIndex.value);
-        axios.put(`http://localhost:8000/api/trainingcourses/${editedIndex.value}`, editedItem.value).then(() => {
+        axios.put(`http://localhost:8000/api/sesses/${editedIndex.value}`, editedItem.value).then(() => {
             editDialog.value = false
             getSessions();
             Swal.fire({
@@ -245,7 +277,7 @@ const deleteItem = async (item) => {
     }).then((result) => {
         if (result.isConfirmed) {
             try {
-                axios.delete(`http://localhost:8000/api/trainingcourses/${editedIndex.value}`).then(() => {
+                axios.delete(`http://localhost:8000/api/sesses/${editedIndex.value}`).then(() => {
                     getSessions();
                     Swal.fire({
                         title: "Deleted!",
