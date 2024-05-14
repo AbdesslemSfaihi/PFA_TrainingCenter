@@ -12,26 +12,12 @@
         class="mx-1"
       />
       By <a
-        href="https://themeselection.com"
+        href="https://github.com/AbdesslemSfaihi/PFA_TrainingCenter"
         target="_blank"
-        rel="noopener noreferrer"
+       
         class="text-primary ms-1"
-      >ThemeSelection</a>
+      >The development team.</a>
     </span>
-    <!-- 👉 Footer: right content -->
-    <span class="d-md-flex gap-x-4 text-primary d-none">
-      <a
-        href="https://themeselection.com/license/"
-        target="noopener noreferrer"
-      >License</a>
-      <a
-        href="https://themeselection.com/"
-        target="noopener noreferrer"
-      >More Themes</a>
-      <a
-        href="https://demos.themeselection.com/materio-vuetify-vuejs-admin-template/documentation/guide/laravel-integration/folder-structure.html"
-        target="noopener noreferrer"
-      >Documentation</a>
-    </span>
+    
   </div>
 </template>

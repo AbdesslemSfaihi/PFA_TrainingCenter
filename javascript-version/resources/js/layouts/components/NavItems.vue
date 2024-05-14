@@ -60,11 +60,11 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'Add New Trainer',
     icon: 'ri-user-line',
-    to: '/personnes',
+    // to: '/personnes',
   }" />
   <VerticalNavLink :item="{
     title: 'Assign Subject',
-    icon: 'ri-group-line',
+    icon: 'ri-contacts-book-2-line',
     // to: '/personnes',
   }" />
   <!--👉 Payment-->
