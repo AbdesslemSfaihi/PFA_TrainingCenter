@@ -31,13 +31,18 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   }" />
   <VerticalNavLink :item="{
     title: 'Modules',
-    icon: 'ri-booklet-line',
+    icon: 'ri-book-line',
     to: '/modules',
   }" />
   <VerticalNavLink :item="{
     title: 'Subjects',
     icon: 'ri-book-open-line',
     to: '/subjects',
+  }" />
+  <VerticalNavLink :item="{
+    title: 'Subject to Module',
+    icon: 'ri-book-2-line',
+    // to: '/modules',
   }" />
   <!--👉 People-->
   <VerticalNavSectionTitle :item="{
