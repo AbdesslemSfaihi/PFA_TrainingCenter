@@ -17,7 +17,7 @@
               <VForm @submit.prevent="addSubject">
                   <VRow>
                       <VCol cols="12">
-                          <VTextField v-model="subject.name" prepend-inner-icon=" ri-artboard-line"
+                          <VTextField v-model="subject.Name" prepend-inner-icon=" ri-artboard-line"
                               label="Subject Name" placeholder="Front end Full subject" required />
                       </VCol>
 
@@ -45,12 +45,12 @@ import Swal from 'sweetalert2';
 import { onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
 const subject = ref({
-  name: ""
+  Name: ""
 });
 const router = useRouter();
 const addSubject = async () => {
   console.log(subject.value)
-  if (subject.value.name == "" ) {
+  if (subject.value.Name == "" ) {
       Swal.fire({
           title: "Error!",
           text: "Please fill all the fields",

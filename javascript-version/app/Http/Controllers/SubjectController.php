@@ -22,7 +22,7 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         $subject = new Subject([
-            'name' => $request->input('name'),
+            'Name' => $request->input('Name'),
         ]);
         $subject->save();
         return response()->json($subject, 201);

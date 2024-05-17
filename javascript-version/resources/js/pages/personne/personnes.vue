@@ -1,4 +1,8 @@
 <template>
+  <div v-if="isLoading" class="text-center">
+            <VProgressCircular :size="30" width="3" color="primary" indeterminate />
+        </div>
+        <div v-else>
   <VCard>
   <div>
     <!-- 👉 VTabs -->
@@ -227,6 +231,7 @@
 </VDialog>
 </div>
 </VCard>
+</div>
 </template>
 
 <script setup>
@@ -239,6 +244,7 @@ const deleteDialog = ref(false)
 const trainers = ref([]);
 const trainees = ref([]);
 const currentTab = ref(0);
+const isLoading = ref(true)
 
 
 const headers = [
@@ -292,6 +298,7 @@ const getTrainers = async () => {
   try {
     const response = await axios.get("http://localhost:8000/api/trainers");
     trainers.value = response.data;
+    isLoading.value = false;
   } catch (error) {
     console.error(error);
   }
@@ -301,6 +308,7 @@ const getTrainees = async () => {
   try {
     const response = await axios.get("http://localhost:8000/api/trainees");
     trainees.value = response.data;
+    isLoading.value = false;
   } catch (error) {
     console.error(error);
   }

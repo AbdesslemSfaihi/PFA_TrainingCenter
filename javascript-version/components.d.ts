@@ -11,6 +11,7 @@ declare module 'vue' {
     CardStatisticsHorizontal: typeof import('./resources/js/@core/components/cards/CardStatisticsHorizontal.vue')['default']
     CardStatisticsVertical: typeof import('./resources/js/@core/components/cards/CardStatisticsVertical.vue')['default']
     CardStatisticsWithImages: typeof import('./resources/js/@core/components/cards/CardStatisticsWithImages.vue')['default']
+    Chart: typeof import('./resources/js/components/Chart.vue')['default']
     Datepicker: typeof import('./resources/js/components/Datepicker.vue')['default']
     DatePicker: typeof import('./resources/js/components/DatePicker.vue')['default']
     ErrorHeader: typeof import('./resources/js/components/ErrorHeader.vue')['default']
