@@ -25,7 +25,7 @@
                     <template #item.name="{ item }">
                         <div>{{ item.name }}</div>
                     </template>
-                    
+
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template #item.id="{ item }">
                         <div class="d-flex gap-1">
@@ -51,13 +51,18 @@
                 <VCardText>
                     <VContainer>
                         <VRow>
-                            <!-- name -->
+                            <!-- Training course -->
                             <VCol cols="12">
-                                <VTextField prepend-inner-icon="ri-artboard-line" v-model="editedItem.name"
-                                    label="Module Name" />
+                                <v-select prepend-icon="ri-artboard-line" :items="trainCourses"
+                                    v-model="editedItem.trainingcourse_id" item-title="name" item-value="id"
+                                    label="Training Course" placeholder="Select Training Course" />
                             </VCol>
 
-        
+                            <!-- Session name  -->
+                            <VCol cols="12">
+                                <VTextField v-model="editedItem.name" prepend-inner-icon="ri-presentation-line"
+                                    label="Module Name" placeholder="Module" />
+                            </VCol>
                         </VRow>
                     </VContainer>
                 </VCardText>
@@ -110,7 +115,7 @@ const defaultItem = ref({
     responsiveId: '',
     id: -1,
     name: '',
-  
+
 })
 const headers = [
     {
@@ -121,7 +126,7 @@ const headers = [
         title: 'MODULE NAME',
         key: 'name',
     },
-    
+
     {
         title: 'ACTIONS',
         key: 'id',
@@ -193,12 +198,12 @@ const edit = () => {
     if (editedIndex.value > -1) {
         // console.log(editedItem.value);
         // console.log(editedIndex.value);
-        axios.put(`http://localhost:8000/api/trainingcourses/${editedIndex.value}`, editedItem.value).then(() => {
+        axios.put(`http://localhost:8000/api/modules/${editedIndex.value}`, editedItem.value).then(() => {
             editDialog.value = false
-            getSessions();
+            getModules();
             Swal.fire({
                 title: "Good job!",
-                text: "This session has been successfully changed!",
+                text: "This module has been successfully changed!",
                 icon: "success"
             });
         })
@@ -227,7 +232,7 @@ const deleteItem = async (item) => {
     }).then((result) => {
         if (result.isConfirmed) {
             try {
-                axios.delete(`http://localhost:8000/api/trainingcourses/${editedIndex.value}`).then(() => {
+                axios.delete(`http://localhost:8000/api/modules/${editedIndex.value}`).then(() => {
                     getModules();
                     Swal.fire({
                         title: "Deleted!",
