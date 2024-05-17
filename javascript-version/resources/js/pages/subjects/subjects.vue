@@ -7,14 +7,14 @@
       <div v-else>
         <h1>Subject</h1>
         <VCol cols="12">
-                <VBtn class="me-4">
-                    <router-link to="/addsubject" class="router-link-custom">
-                        <IconBtn size="small">
-                            <VIcon icon="ri-add-circle-fill" />
-                        </IconBtn>
-                        Add a new subject
-                    </router-link>
-                </VBtn>
+          <VBtn class="me-4" color="primary">
+          <router-link to="/addsubject" class="router-link-custom">
+            <IconBtn size="small">
+              <VIcon icon="ri-add-circle-fill" />
+            </IconBtn>
+            Add a new subject
+          </router-link>
+        </VBtn>
             </VCol>
         <br />
         <VCard>
@@ -204,4 +204,10 @@ import { useRouter } from 'vue-router';
     getSubjects();
   });
   </script>
+  <style lang="scss">
+  .router-link-custom {
+  color: white; /* Set text color */
+  
+}
+  </style>
   

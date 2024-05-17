@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('sesses', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30);
-            $table->string('startingDate', 50);
+            $table->date('startingDate');
             $table->float('initialPrice');
-            $table->integer('discount');
-            $table->float('priceWD');
+            $table->integer('discount')->nullable();
+            $table->float('priceWD')->nullable();
             $table->unsignedBigInteger("trainingcourse_id");
             $table->foreign('trainingcourse_id')
                 ->references('id')

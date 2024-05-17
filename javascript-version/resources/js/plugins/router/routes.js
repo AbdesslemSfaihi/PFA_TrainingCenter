@@ -24,7 +24,7 @@ export const routes = [
         component: Addsubject
       },
       {
-        path: 'addmodule',
+        path: 'modules/add',
         component: () => import('@/pages/modules/Addmodule.vue'),
       },
       {

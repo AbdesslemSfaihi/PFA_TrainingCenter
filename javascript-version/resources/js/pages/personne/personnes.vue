@@ -2,21 +2,21 @@
   <VCard>
   <div>
     <!-- 👉 VTabs -->
-    <VTabs v-model="currentTab">
-      <VTab>Trainer</VTab>
-      <VTab>Trainee</VTab>
-    </VTabs>
+    <VTabs v-model="currentTab" class="d-flex">
+        <VTab>Trainer</VTab>
+        <VTab>Trainee</VTab>
 
-    <router-link to="/personnes/add">
-    <div class="icon-wrapper">
-    <VBtn
-    variant="text"
-    icon="ri-user-add-line"
-    color="secondary"
-    class="bigger-icon"
-  />
-</div>
-</router-link>
+        <div class="flex-grow-1"></div> <router-link to="/personnes/add">
+          <div class="icon-wrapper">
+            <VBtn
+              variant="text"
+              icon="ri-user-add-line"
+              color="secondary"
+              class="bigger-icon"
+            />
+          </div>
+        </router-link>
+      </VTabs>
 
     <!-- 👉 Datatable -->
     <VDataTable
@@ -384,15 +384,23 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.icon-wrapper {
-display: flex;
-justify-content: flex-end;
-margin-top: 10px; 
-margin-right: 15px;
-font-size: large;
-}
-.bigger-icon {
-font-size: 21px; 
-}
+  .icon-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    
+    margin-right: 30px;
+    font-size: large;
+  }
 
+  .bigger-icon {
+    font-size: 21px;
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .flex-grow-1 {
+    flex-grow: 1;
+  }
 </style>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->primary(['trainee_id', 'sess_id']);
             $table->foreign('trainee_id')->references('id')->on('trainees');
             $table->foreign('sess_id')->references('id')->on('sesses');
-            $table->integer('paymentDate');
+            $table->date('paymentDate');
             $table->integer('paidAmount');
             $table->integer('paymentStatus');
         });
