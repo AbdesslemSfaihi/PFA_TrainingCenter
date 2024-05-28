@@ -3,6 +3,19 @@
             <VProgressCircular :size="30" width="3" color="primary" indeterminate />
         </div>
         <div v-else>
+          <h1>People</h1>
+            <VCol cols="12">
+              <VBtn class="move-left me-4">
+                    <router-link to="/people/add" class="router-link-custom">
+                        <IconBtn size="small">
+                            <VIcon icon="ri-add-circle-fill" />
+                        </IconBtn>
+                        Add a new people 
+                    </router-link>
+                </VBtn>
+            </VCol>
+
+            <VTextField v-model="searchTerm" label="Search" class="mb-4 custom-width" />
   <VCard>
   <div>
     <!-- 👉 VTabs -->
@@ -10,22 +23,13 @@
         <VTab>Trainer</VTab>
         <VTab>Trainee</VTab>
 
-        <div class="flex-grow-1"></div> <router-link to="/personnes/add">
-          <div class="icon-wrapper">
-            <VBtn
-              variant="text"
-              icon="ri-user-add-line"
-              color="secondary"
-              class="bigger-icon"
-            />
-          </div>
-        </router-link>
+        
       </VTabs>
 
     <!-- 👉 Datatable -->
     <VDataTable
       :headers="headers"
-      :items="currentTab === 0 ? trainers : trainees"
+      :items="filteredItems" 
       :items-per-page="5"
       class="text-no-wrap"
     >
@@ -65,6 +69,9 @@
       <!--Actions-->
       <template #item.actions="{ item }">
     <div class="d-flex gap-1">
+      <IconBtn size="small" @click="viewItem(item)">
+      <VIcon icon="ri-eye-line" />
+    </IconBtn>
       <IconBtn
         size="small"
         @click="editItem(item)"
@@ -79,6 +86,70 @@
     </div>
   </template>
 </VDataTable>
+
+<!-- 👉 View Dialog  -->
+<VDialog v-model="viewDialog" max-width="600px">
+  <VCard>
+    <VCardTitle>
+      <span class="headline">View User</span>
+    </VCardTitle>
+
+    <VContainer>
+      <VRow>
+        <!-- Image -->
+        <VCol cols="12" class="text-center">
+          <div class="image-container">
+            <VImg :src="viewedItem.image" height="200" contain class="image-border" />
+          </div>
+        </VCol>
+
+        <!-- Name -->
+        <VCol cols="12" class="mt-4">
+          <VTypography variant="subtitle1" class="attribute-name">Name:</VTypography>
+          <VTypography class="mt-1 attribute-value">{{ viewedItem.name }}</VTypography>
+        </VCol>
+
+        <!-- Birthdate -->
+        <VCol cols="12" class="mt-2">
+          <VTypography variant="subtitle1" class="attribute-name">Birthdate:</VTypography>
+          <VTypography class="mt-1 attribute-value">{{ viewedItem.birthdate }}</VTypography>
+        </VCol>
+
+        <!-- Email -->
+        <VCol cols="12" class="mt-2">
+          <VTypography variant="subtitle1" class="attribute-name">Email:</VTypography>
+          <VTypography class="mt-1 attribute-value">{{ viewedItem.email }}</VTypography>
+        </VCol>
+
+        <!-- Password -->
+        <VCol cols="12" class="mt-2">
+          <VTypography variant="subtitle1" class="attribute-name">Password:</VTypography>
+          <VTypography class="mt-1 attribute-value">{{ viewedItem.password }}</VTypography>
+        </VCol>
+
+        <!-- Phone -->
+        <VCol cols="12" class="mt-2">
+          <VTypography variant="subtitle1" class="attribute-name">Phone:</VTypography>
+          <VTypography class="mt-1 attribute-value">{{ viewedItem.phone }}</VTypography>
+        </VCol>
+      </VRow>
+    </VContainer>
+
+    <VCardActions>
+      <VSpacer />
+      <VBtn color="primary" variant="elevated" @click="closeView">Close</VBtn>
+      <VSpacer />
+    </VCardActions>
+  </VCard>
+</VDialog>
+
+
+
+
+
+
+
+
 
 <!-- 👉 Edit Dialog  -->
 <VDialog
@@ -236,19 +307,19 @@
 
 <script setup>
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue'; // Add computed import
 
-const editDialog = ref(false)
-const deleteDialog = ref(false)
+const editDialog = ref(false);
+const deleteDialog = ref(false);
 
 const trainers = ref([]);
 const trainees = ref([]);
 const currentTab = ref(0);
-const isLoading = ref(true)
-
+const isLoading = ref(true);
+const searchTerm = ref('');
 
 const headers = [
-{
+  {
     title: 'Image',
     key: 'image',
   },
@@ -278,21 +349,32 @@ const headers = [
   },
 ];
 
-
 const defaultItem = ref({
-responsiveId: '',
-id: -1,
-name: '',
-birthdate: '',
-email: '',
-password: '',
-phone: '',
-image: '',
+  responsiveId: '',
+  id: -1,
+  name: '',
+  birthdate: '',
+  email: '',
+  password: '',
+  phone: '',
+  image: '',
+});
 
-})
+// Initialize viewedItem with a clone of defaultItem
+const viewedItem = ref({ ...defaultItem.value });
+const viewDialog = ref(false);
 
-const editedItem = ref(defaultItem.value)
-const editedIndex = ref(-1)
+const viewItem = item => {
+  viewedItem.value = { ...item };
+  viewDialog.value = true;
+};
+
+const closeView = () => {
+  viewDialog.value = false;
+};
+
+const editedItem = ref({ ...defaultItem.value }); // Initialize with a clone of defaultItem
+const editedIndex = ref(-1);
 
 const getTrainers = async () => {
   try {
@@ -326,18 +408,17 @@ const deleteItem = item => {
   deleteDialog.value = true;
 };
 
-
 const close = () => {
-editDialog.value = false
-editedIndex.value = -1
-editedItem.value = { ...defaultItem.value }
-}
+  editDialog.value = false;
+  editedIndex.value = -1;
+  editedItem.value = { ...defaultItem.value };
+};
 
 const closeDelete = () => {
-deleteDialog.value = false
-editedIndex.value = -1
-editedItem.value = { ...defaultItem.value }
-}
+  deleteDialog.value = false;
+  editedIndex.value = -1;
+  editedItem.value = { ...defaultItem.value };
+};
 
 const save = async () => {
   if (editedIndex.value > -1) {
@@ -361,7 +442,7 @@ const save = async () => {
       }
     }
   } else {
-    
+    // Handle if editedIndex is not greater than -1
   }
   close();
 };
@@ -390,8 +471,25 @@ onMounted(() => {
   getTrainers();
   getTrainees();
 });
+
+const filteredItems = computed(() => {
+  const items = currentTab.value === 0 ? trainers.value : trainees.value;
+  if (!searchTerm.value) {
+    return items;
+  }
+  return items.filter(item =>
+    Object.values(item).some(value =>
+      String(value).toLowerCase().includes(searchTerm.value.toLowerCase())
+    )
+  );
+});
 </script>
+
 <style scoped>
+.custom-width {
+  max-width: 1050px; /* Adjust the value as needed */
+}
+
   .icon-wrapper {
     display: flex;
     justify-content: flex-end;
@@ -411,4 +509,34 @@ onMounted(() => {
   .flex-grow-1 {
     flex-grow: 1;
   }
+  .router-link-custom {
+  color: white; /* Set text color */
+  }
+  .move-left {
+  transform: translateX(-10px); /* Adjust the value as needed */
+}
+
+.image-container {
+    border: 2px solid #ddd; /* Adjust border style and color as needed */
+    padding: 10px;
+    border-radius: 10px; /* Adjust border radius as needed */
+  }
+
+  .image-border {
+    border-radius: 5px; /* Adjust border radius as needed */
+  }
+
+  .attribute-name {
+    text-align: left;
+    font-weight: bold;
+    display: inline-block;
+    width: 100px; /* Adjust the width as needed */
+  }
+
+  .attribute-value {
+    text-align: center;
+    display: inline-block;
+    width: calc(100% - 120px); /* Adjust the width as needed */
+  }
+
 </style>

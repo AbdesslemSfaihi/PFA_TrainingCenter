@@ -51,7 +51,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'People',
     icon: 'ri-group-line',
-    to: '/personnes',
+    to: '/people',
   }" />
   <!--👉 Trainers-->
   <VerticalNavSectionTitle :item="{

@@ -37,12 +37,12 @@ export const routes = [
         component: () => import('@/pages/traincourse/addTrainCourse.vue'),
       },
       {
-        path: 'personnes',
-        component: () => import('@/pages/personne/personnes.vue'),
+        path: 'people',
+        component: () => import('@/pages/people/people.vue'),
       },
       {
-        path: 'personnes/add',
-        component: () => import('@/pages/personne/addPersonne.vue'),
+        path: 'people/add',
+        component: () => import('@/pages/people/addPeople.vue'),
       },
       {
         path: 'sessions',
