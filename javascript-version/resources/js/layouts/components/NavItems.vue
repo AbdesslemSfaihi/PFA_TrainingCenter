@@ -10,7 +10,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
     icon: 'ri-bar-chart-box-line',
     to: '/dashboard',
   }" />
-      <VerticalNavLink :item="{
+  <VerticalNavLink :item="{
     title: 'Calendar',
     icon: 'ri-calendar-line',
     // to: '/personnes',
@@ -60,7 +60,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'Add New Trainer',
     icon: 'ri-user-line',
-    // to: '/personnes',
+    to: '/personnes/add',
   }" />
   <VerticalNavLink :item="{
     title: 'Assign Subject',
