@@ -40,10 +40,31 @@ export const routes = [
         path: 'people',
         component: () => import('@/pages/people/people.vue'),
       },
+
       {
         path: 'people/add',
         component: () => import('@/pages/people/addPeople.vue'),
       },
+      {
+        path: 'subjectmodule',
+        component: () => import('@/pages/subjectmodule/subjectmodule.vue'),
+      },
+
+      {
+        path: 'subjectmodule/add',
+        component: () => import('@/pages/subjectmodule/Addsubjectmodule.vue'),
+      },
+
+      {
+        path: 'seance',
+        component: () => import('@/pages/seance/seance.vue'),
+      },
+
+      {
+        path: 'seance/add',
+        component: () => import('@/pages/seance/addSeance.vue'),
+      },
+
       {
         path: 'sessions',
         component: () => import('@/pages/session/session.vue'),

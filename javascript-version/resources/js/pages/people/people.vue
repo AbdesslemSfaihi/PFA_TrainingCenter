@@ -10,7 +10,7 @@
                         <IconBtn size="small">
                             <VIcon icon="ri-add-circle-fill" />
                         </IconBtn>
-                        Add a new people 
+                        Add a new person
                     </router-link>
                 </VBtn>
             </VCol>
@@ -56,10 +56,10 @@
         <span>{{ item.email }}</span>
       </template>
 
-      <!-- Password -->
+      <!-- Password 
       <template #item.password="{ item }">
         <span>{{ item.password }}</span>
-      </template>
+      </template> -->
 
       <!-- Phone -->
       <template #item.phone="{ item }">
@@ -121,11 +121,11 @@
           <VTypography class="mt-1 attribute-value">{{ viewedItem.email }}</VTypography>
         </VCol>
 
-        <!-- Password -->
+        <!-- Password 
         <VCol cols="12" class="mt-2">
           <VTypography variant="subtitle1" class="attribute-name">Password:</VTypography>
           <VTypography class="mt-1 attribute-value">{{ viewedItem.password }}</VTypography>
-        </VCol>
+        </VCol>-->
 
         <!-- Phone -->
         <VCol cols="12" class="mt-2">
@@ -335,10 +335,11 @@ const headers = [
     title: 'Email',
     key: 'email',
   },
+  /*
   {
     title: 'Password',
     key: 'password',
-  },
+  },*/
   {
     title: 'Phone',
     key: 'phone',
