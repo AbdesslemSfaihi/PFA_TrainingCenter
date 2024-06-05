@@ -1,8 +1,29 @@
 <template>
   <div>
+    <div class="statistics-cards">
+      <div class="card card1">
+        <h3>Training Courses</h3>
+        <p>{{ trainers.length }}</p>
+      </div>
+      <div class="card card2">
+        <h3>Subjects</h3>
+        <p>{{ trainees.length }}</p>
+      </div>
+      <div class="card card3">
+        <h3>Trainers</h3>
+        <p>{{ trainers.length }}</p>
+      </div>
+      <div class="card card4">
+        <h3>Trainees</h3>
+        <p>{{ trainees.length }}</p>
+      </div>
+    </div>
+
+    <!-- Chart -->
     <Chart v-if="loaded" :data="chartData" :options="chartOptions" />
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -97,3 +118,45 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.statistics-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: calc(25% - 10px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card1 {
+  background-color: #43e258; /* Example color for trainers */
+}
+
+.card2 {
+  background-color: #c8e65c; /* Example color for trainees */
+}
+.card3 {
+  background-color: #ff9999; /* Example color for trainers */
+}
+
+.card4 {
+  background-color: #99ccff; /* Example color for trainees */
+}
+
+.card h3 {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+</style>

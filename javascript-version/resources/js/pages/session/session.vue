@@ -36,6 +36,9 @@
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template #item.id="{ item }">
                         <div class="d-flex gap-1">
+                            <IconBtn size="small" @click="viewItem(item)">
+                <VIcon icon="ri-eye-line" />
+                            </IconBtn>
                             <IconBtn size="small" @click="editItem(item)">
                                 <VIcon icon="ri-pencil-line" />
                             </IconBtn>
@@ -47,6 +50,48 @@
                 </VDataTable>
             </VCard>
         </div>
+
+
+        <VDialog v-model="viewDialog" max-width="600px">
+          <VCard>
+            <VCardTitle>
+              <span class="headline">View Session</span>
+            </VCardTitle>
+            <VContainer>
+              <VRow>
+                
+                <VCol cols="12" class="mt-4">
+                  <VTypography variant="subtitle1" class="attribute-name">Training Course : </VTypography>
+                  <VTypography class="mt-1 attribute-value">{{ getTrainingCourseName(viewedItem.trainingcourse_id) }}</VTypography>
+                </VCol>
+                <VCol cols="12" class="mt-2">
+                  <VTypography variant="subtitle1" class="attribute-name">Starting Date : </VTypography>
+                  <VTypography class="mt-1 attribute-value">{{ viewedItem.startingDate }}</VTypography>
+                </VCol>
+                <VCol cols="12" class="mt-2">
+                  <VTypography variant="subtitle1" class="attribute-name">Initial Price : </VTypography>
+                  <VTypography class="mt-1 attribute-value">{{ viewedItem.initialPrice }}</VTypography>
+                </VCol>
+                <VCol cols="12" class="mt-2">
+                  <VTypography variant="subtitle1" class="attribute-name">Discount : </VTypography>
+                  <VTypography class="mt-1 attribute-value">{{ viewedItem.discount }}</VTypography>
+                </VCol>
+                <VCol cols="12" class="mt-2">
+                  <VTypography variant="subtitle1" class="attribute-name">Price After Discount : </VTypography>
+                  <VTypography class="mt-1 attribute-value">{{ calculatePriceAfterDiscount(viewedItem) }}</VTypography>
+                </VCol>
+              </VRow>
+            </VContainer>
+            <VCardActions>
+              <VSpacer />
+              <VBtn color="primary" variant="elevated" @click="closeView">Close</VBtn>
+              <VSpacer />
+            </VCardActions>
+          </VCard>
+        </VDialog>
+
+
+
 
         <!-- 👉 Edit Dialog  -->
         <VDialog v-model="editDialog" max-width="600px">
@@ -180,6 +225,20 @@ const route = useRoute();
 const editedItem = ref(defaultItem.value);
 const editedIndex = ref(-1);
 
+const viewedItem = ref({ ...defaultItem.value });
+const viewDialog = ref(false);
+
+const viewItem = item => {
+  viewedItem.value = { ...item };
+  viewDialog.value = true;
+};
+
+const closeView = () => {
+  viewDialog.value = false;
+};
+
+
+
 const editDialog = ref(false);
 const deleteDialog = ref(false);
 
@@ -298,6 +357,14 @@ onMounted(() => {
     getSessions();
     getTrainingCourses();
 });
+
+// Inside your setup
+const calculatePriceAfterDiscount = (item) => {
+    const priceWD = item.initialPrice - (item.initialPrice * item.discount / 100);
+    return priceWD.toFixed(2); // Assuming you want to round to 2 decimal places
+};
+
+
 
 </script>
 

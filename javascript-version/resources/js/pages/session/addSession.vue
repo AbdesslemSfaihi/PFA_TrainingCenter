@@ -32,8 +32,9 @@
                             </VRow>
                             <VRow>
                                 <VCol cols="12">
-                                    <VTextField prepend-inner-icon="ri-calendar-line" placeholder="YYYY-MM-DD"
-                                        label="Starting Date" v-model="session.startingDate" readonly />
+                                    <VTextField v-model="session.startingDate" type="date" label="Starting Date" prepend-inner-icon="ri-calendar-line" />
+                                    <!--<VTextField prepend-inner-icon="ri-calendar-line" placeholder="YYYY-MM-DD"
+                                        label="Starting Date" v-model="session.startingDate" readonly />-->
                                 </VCol>
 
                             </VRow>
@@ -72,13 +73,13 @@
                                 </VBtn>
                             </VCol>
                         </VCol>
-                        <VCol cols="6">
+                       <!-- <VCol cols="6">
                             <VRow>
                                 <v-date-picker title="Starting date" :min="currentDate" elevation="15"
                                     :value="session.startingDate" format="yyyy-MM-dd"
                                     @input="fixDate($event, 'startingDate')"></v-date-picker>
                             </VRow>
-                        </VCol>
+                        </VCol>-->
                     </VRow>
                 </VForm>
             </VCardText>
@@ -92,7 +93,6 @@ import Swal from 'sweetalert2';
 import { onMounted, ref } from "vue";
 import { useRouter } from 'vue-router';
 import { useDate } from 'vuetify';
-import { VDatePicker } from "vuetify/lib/components/index.mjs";
 
 const currentDate = new Date().toISOString().slice(0, 10);
 const isInputEnabled = ref(false)
