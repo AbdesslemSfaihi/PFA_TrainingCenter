@@ -4,14 +4,14 @@
             <VProgressCircular :size="30" width="3" color="primary" indeterminate />
         </div>
         <div v-else>
-            <h1>Module_Subjet</h1>
+            <h1>Assign a Subject to a Module</h1>
             <VCol cols="12">
                 <VBtn class="me-4">
                     <router-link to="subjectmodule/add" class="router-link-custom">
                         <IconBtn size="small">
                             <VIcon icon="ri-add-circle-fill" />
                         </IconBtn>
-                        Add a new Module_Subjet
+                        Add a Subject to a Module
                     </router-link>
                 </VBtn>
             </VCol>

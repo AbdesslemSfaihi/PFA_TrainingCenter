@@ -20,7 +20,9 @@
     </div>
 
     <!-- Chart -->
+    <VCard class="chart-card">
     <Chart v-if="loaded" :data="chartData" :options="chartOptions" />
+  </VCard>
   </div>
 </template>
 
@@ -92,7 +94,10 @@ export default {
     const chartOptions = ref({
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1 
+          }
         }
       },
       plugins: {
@@ -157,6 +162,21 @@ export default {
 .card p {
   font-size: 24px;
   font-weight: bold;
+}
+
+.chart-card {
+  width: 515px; /* Set your desired width */
+  height: 350px; /* Set your desired height */
+  padding: 20px; /* Add some padding if needed */
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-card .chart-container {
+  width: 100%;
+  height: 100%;
 }
 
 </style>

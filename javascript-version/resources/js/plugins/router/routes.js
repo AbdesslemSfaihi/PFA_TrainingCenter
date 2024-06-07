@@ -11,6 +11,10 @@ export const routes = [
         component: () => import('@/pages/dashboard.vue'),
       },
       {
+        path: 'calendar',
+        component: () => import('@/pages/calendar/calendar.vue'),
+      },
+      {
         path: 'subjects',
         component: () => import('@/pages/subjects/subjects.vue'),
       },

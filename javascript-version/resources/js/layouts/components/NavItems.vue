@@ -13,7 +13,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'Calendar',
     icon: 'ri-calendar-line',
-    // to: '/personnes',
+    to: '/calendar',
   }" />
   <!--👉 Trainings-->
   <VerticalNavSectionTitle :item="{
@@ -42,8 +42,15 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'Subject to Module',
     icon: 'ri-book-2-line',
-    // to: '/modules',
+    to: '/subjectmodule',
   }" />
+
+<VerticalNavLink :item="{
+    title: 'Seances',
+    icon: 'ri-book-2-line',
+    to: '/seance',
+  }" />
+
   <!--👉 People-->
   <VerticalNavSectionTitle :item="{
     heading: 'People',
@@ -60,7 +67,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'Add New Trainer',
     icon: 'ri-user-line',
-    to: '/personnes/add',
+    to: '/people/add',
   }" />
   <VerticalNavLink :item="{
     title: 'Assign Subject',

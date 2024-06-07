@@ -1,5 +1,20 @@
 <template>
-    <div>
+  <div>
+      <div v-if="isLoading" class="text-center">
+          <VProgressCircular :size="30" width="3" color="primary" indeterminate />
+      </div>
+      <div v-else>
+          <h1>Seance</h1>
+          <VCol cols="12">
+              <VBtn class="me-4">
+                  <router-link to="/seance/add" class="router-link-custom">
+                      <IconBtn size="small">
+                          <VIcon icon="ri-add-circle-fill" />
+                      </IconBtn>
+                      Add a new seance
+                  </router-link>
+              </VBtn>
+          </VCol>
       <VCard>
         <VCardTitle>Seances List</VCardTitle>
         <VCardText>
@@ -10,12 +25,13 @@
           ></VDataTable>
         </VCardText>
       </VCard>
+      </div>
     </div>
-  </template>
+</template>
   
   <script setup>
   import axios from 'axios';
-  import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
   
   const seances = ref([]);
   
@@ -40,5 +56,10 @@
   
   onMounted(fetchSeances);
   </script>
-  
+  <style>
+  .router-link-custom {
+      color: white;
+      /* Set the desired text color */
+  }
+  </style>
   
