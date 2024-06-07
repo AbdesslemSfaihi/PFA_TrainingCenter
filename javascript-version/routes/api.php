@@ -9,6 +9,7 @@ use App\Http\Controllers\SeanceController;
 use App\Http\Controllers\SessController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\TraineeController;
+use App\Http\Controllers\SubjectModuleController;
 
 
 Route::get('/user', function (Request $request) {
@@ -41,4 +42,8 @@ Route::middleware('api')->group(function () {
 
 Route::middleware('api')->group(function () {
     Route::resource('seances', SeanceController::class);
+});
+
+Route::middleware('api')->group(function () {
+    Route::resource('subjectmodule', SubjectModuleController::class);
 });

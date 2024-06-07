@@ -16,13 +16,13 @@
                 </VBtn>
             </VCol>
             <VCard>
-                <VDataTable :headers="headers" :items="subject_module" :items-per-page="10" class="text-no-wrap">
+                <VDataTable :headers="headers" :items="subject_modules" :items-per-page="10" class="text-no-wrap">
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template #item.subject_id="{ item }">
                         <div>{{ getSubjectName(item.subject_id) }}</div>
                     </template>
                     <template #item.module_id="{ item }">
-                        <div>{{ getModulesName(item.modules_id) }}</div>
+                        <div>{{ getModuleName(item.module_id) }}</div>
                     </template>
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template #item.nbHours="{ item }">
@@ -44,7 +44,7 @@
             </VCard>
         </div>
 
-        <!-- ðŸ‘‰ Edit Dialog  -->
+        <!-- Edit Dialog -->
         <VDialog v-model="editDialog" max-width="600px">
             <VCard>
                 <VCardTitle>
@@ -59,8 +59,6 @@
                                 <VTextField prepend-inner-icon="ri-artboard-line" v-model="editedItem.name"
                                     label="Module Name" />
                             </VCol>
-
-        
                         </VRow>
                     </VContainer>
                 </VCardText>
@@ -78,7 +76,7 @@
                 </VCardActions>
             </VCard>
         </VDialog>
-        <!-- ðŸ‘‰ Delete Dialog  -->
+        <!-- Delete Dialog -->
         <VDialog v-model="deleteDialog" max-width="500px">
             <VCard>
                 <VCardTitle>
@@ -102,16 +100,18 @@
         </VDialog>
     </div>
 </template>
+
 <script setup>
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const defaultItem = ref({
     responsiveId: '',
     id: -1,
     nbHours: '',
-  
-})
+});
 const headers = [
     {
         title: 'SUBJECT NAME',
@@ -123,16 +123,15 @@ const headers = [
     },
     {
         title: 'NB HOURS',
-        key: 'name',
+        key: 'nbHours',
     },
-    
     {
         title: 'ACTIONS',
         key: 'id',
     },
 ];
 
-const isLoading = ref(true)
+const isLoading = ref(true);
 const router = useRouter();
 const route = useRoute();
 const editedItem = ref(defaultItem.value);
@@ -141,31 +140,27 @@ const editedIndex = ref(-1);
 const editDialog = ref(false);
 const deleteDialog = ref(false);
 
-
 const subjects = ref([]);
 const modules = ref([]);
-const subject_module= ref([]);
+const subject_modules = ref([]);
 
-const getSubject_module = async () => {
+const getSubjectModules = async () => {
     try {
-        await axios.get('http://localhost:8000/api/subject_modules').then((response) => {
-            console.log(response.data);
-            modules.value = response.data;
-            isLoading.value = false;
-        });
+        const response = await axios.get('http://localhost:8000/api/subjectmodule');
+        console.log(response.data);
+        subject_modules.value = response.data;
+        isLoading.value = false;
     } catch (error) {
         console.error(error);
     }
 };
 
-
 const getModules = async () => {
     try {
-        await axios.get('http://localhost:8000/api/modules').then((response) => {
-            console.log(response.data);
-            modules.value = response.data;
-            isLoading.value = false;
-        });
+        const response = await axios.get('http://localhost:8000/api/modules');
+        console.log(response.data);
+        modules.value = response.data;
+        isLoading.value = false;
     } catch (error) {
         console.error(error);
     }
@@ -173,74 +168,61 @@ const getModules = async () => {
 
 const getSubjects = async () => {
     try {
-        await axios.get('http://localhost:8000/api/subjects').then((response) => {
-            console.log(response.data);
-            subjects.value = response.data;
-        });
+        const response = await axios.get('http://localhost:8000/api/subjects');
+        console.log(response.data);
+        subjects.value = response.data;
     } catch (error) {
         console.error(error);
     }
 };
 
-const  getModulesName= (moduleId) => {
-    const module= module.value.find(module=> module.id === moduleId);
-    return module? module.name : '';
-};
-const  getSubjectName= (subjectId) => {
-    const subject= subject.value.find(subject=> subject.id === subjectId);
-    return subject? subject.name : '';
+const getModuleName = (moduleId) => {
+    const module = modules.value.find((module) => module.id === moduleId);
+    return module ? module.name : '';
 };
 
+const getSubjectName = (subjectId) => {
+    const subject = subjects.value.find((subject) => subject.id === subjectId);
+    return subject ? subject.Name : '';
+};
 
 // Edit methods 
-const editItem = item => {
-    // console.log(item);
-    // console.log(item.id);
-    // console.log(editedIndex.value);
-    // console.log(editedItem.value);
-    editedIndex.value = item.id
-    editedItem.value = { ...item }
-    editDialog.value = true
-
-    // console.log("-------------" + editedIndex.value);
-    // console.log("-------------" + editedItem.value);
-}
+const editItem = (item) => {
+    editedIndex.value = item.id;
+    editedItem.value = { ...item };
+    editDialog.value = true;
+};
 
 const close = () => {
-    editDialog.value = false
-    editedIndex.value = -1
-    editedItem.value = { ...defaultItem.value }
-}
+    editDialog.value = false;
+    editedIndex.value = -1;
+    editedItem.value = { ...defaultItem.value };
+};
 
 const edit = () => {
     if (editedIndex.value > -1) {
-        // console.log(editedItem.value);
-        // console.log(editedIndex.value);
-        axios.put(`http://localhost:8000/api/modules/${editedIndex.value}`, editedItem.value).then(() => {
-            editDialog.value = false
-            
-           
-            Swal.fire({
-                title: "Good job!",
-                text: "This session has been successfully changed!",
-                icon: "success"
-            });
-        })
-            .catch(error => {
+        axios.put(`http://localhost:8000/api/subjectmodule/${editedIndex.value}`, editedItem.value)
+            .then(() => {
+                editDialog.value = false;
+                getSubjectModules();
+                Swal.fire({
+                    title: "Good job!",
+                    text: "This module has been successfully changed!",
+                    icon: "success"
+                });
+            })
+            .catch((error) => {
                 console.error("There was an error!", error);
             });
+    } else {
+        console.log("No item to edit");
+        close();
     }
-    else {
-        console.log("No item to edit")
-        close()
-    }
-}
+};
 
-
-const deleteItem = async (item) => {
-
-    editedIndex.value = item.id
-    editedItem.value = { ...item }
+const deleteItem = (item) => {
+    editedIndex.value = item.id;
+    editedItem.value = { ...item };
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -251,28 +233,27 @@ const deleteItem = async (item) => {
         confirmButtonText: "Yes, delete it!"
     }).then((result) => {
         if (result.isConfirmed) {
-            try {
-                axios.delete(`http://localhost:8000/api/modules/${editedIndex.value}`).then(() => {
-                    getModules();
+            axios.delete(`http://localhost:8000/api/subjectmodule/${editedIndex.value}`)
+                .then(() => {
+                    getSubjectModules();
                     Swal.fire({
                         title: "Deleted!",
-                        text: "This session course has been deleted.",
+                        text: "This module has been deleted.",
                         icon: "success"
                     });
                 })
-            } catch (error) {
-                console.log(error)
-            }
+                .catch((error) => {
+                    console.error("There was an error!", error);
+                });
         }
     });
-}
+};
 
 onMounted(() => {
     getModules();
     getSubjects();
-    getSubject_module();
+    getSubjectModules();
 });
-
 </script>
 
 <style>

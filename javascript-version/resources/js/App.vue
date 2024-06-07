@@ -4,6 +4,6 @@
 <template>
   <VApp>
     <RouterView />
-    <UpgradeToPro />
+    <!-- <UpgradeToPro /> -->
   </VApp>
 </template>
