@@ -1,7 +1,7 @@
 import Addsubject from '@/pages/subjects/Addsubject.vue';
 
 export const routes = [
-  { path: '/', redirect: '/dashboard' },
+  { path: '/', redirect: '/login' },
   {
     path: '/',
     component: () => import('@/layouts/default.vue'),
@@ -19,13 +19,13 @@ export const routes = [
         component: () => import('@/pages/subjects/subjects.vue'),
       },
       {
-        path: 'modules',
-        component: () => import('@/pages/modules/modules.vue'),
-      },
-      {
         name: "Addsubject",
         path: "/addsubject",
         component: Addsubject
+      },
+      {
+        path: 'modules',
+        component: () => import('@/pages/modules/modules.vue'),
       },
       {
         path: 'modules/add',
@@ -110,10 +110,12 @@ export const routes = [
     children: [
       {
         path: 'login',
+        name: 'login',
         component: () => import('@/pages/login.vue'),
       },
       {
         path: 'register',
+        name: 'register',
         component: () => import('@/pages/register.vue'),
       },
       {
@@ -123,6 +125,3 @@ export const routes = [
     ],
   },
 ]
-
-
-

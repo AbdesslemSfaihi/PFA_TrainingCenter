@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <div style="display: flex; align-items: center;">
-      <router-link to="/seances">
+      <router-link to="/seance">
         <IconBtn size="medium" style="margin-right: 8px;" class="red-icon">
           <VIcon icon="ri-arrow-left-circle-line" />
         </IconBtn>
@@ -95,7 +95,7 @@
             <VCol cols="12">
               <VBtn type="submit" class="me-4">Add Seance</VBtn>
               <VBtn color="secondary">
-                <router-link to="/seances" class="router-link-cancel">Cancel</router-link>
+                <router-link to="/seance" class="router-link-cancel">Cancel</router-link>
               </VBtn>
             </VCol>
           </VRow>
@@ -214,7 +214,7 @@ const addSeance = async () => {
       text: 'A new seance was added successfully!',
       icon: 'success'
     });
-    router.push('/seances');
+    router.push('/seance');
   } catch (error) {
     console.error('Error adding seance:', error.response || error.message);
     Swal.fire({

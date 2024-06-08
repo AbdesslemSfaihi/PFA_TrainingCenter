@@ -10,6 +10,8 @@ use App\Http\Controllers\SessController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\SubjectModuleController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
 
 Route::get('/user', function (Request $request) {
@@ -47,3 +49,10 @@ Route::middleware('api')->group(function () {
 Route::middleware('api')->group(function () {
     Route::resource('subjectmodule', SubjectModuleController::class);
 });
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
+Route::middleware('auth:sanctum')->post('/logout', [
+    LoginController::class,
+    'logout'
+]);
