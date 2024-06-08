@@ -72,7 +72,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'Assign Subject',
     icon: 'ri-contacts-book-2-line',
-    // to: '/personnes',
+    to: '/subjectmodule',
   }" />
   <!--👉 Payment-->
   <VerticalNavSectionTitle :item="{

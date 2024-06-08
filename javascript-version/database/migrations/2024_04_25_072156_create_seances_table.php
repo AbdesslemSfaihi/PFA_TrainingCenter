@@ -15,7 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('date');
             $table->string('startH');
-            $table->string('duration');
+            $table->string('endH');
+            $table->unsignedBigInteger("subject_id");
+            $table->foreign('subject_id')
+                ->references('id')
+                ->on('subjects')
+                ->onDelete('restrict');
+            $table->unsignedBigInteger("trainingcourse_id");
+            $table->foreign('trainingcourse_id')
+                ->references('id')
+                ->on('training_courses')
+                ->onDelete('restrict');
             $table->unsignedBigInteger("sess_id");
             $table->foreign('sess_id')
                 ->references('id')

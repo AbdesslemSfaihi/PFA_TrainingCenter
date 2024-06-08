@@ -9,11 +9,13 @@ class Seance extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'trainingcourse_id',
         'date',
         'startH',
-        'duration',
-        'session_id'
+        'endH',
+        'sess_id',
+        'trainer_id',
+        'subject_id'
     ];
 
     public function sesses()

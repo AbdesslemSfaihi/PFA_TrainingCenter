@@ -22,11 +22,12 @@ class SeanceController extends Controller
     public function store(Request $request)
     {
         $seance = new Seance([
-            'name' => $request->input('name'),
             'date' => $request->input('date'),
             'startH' => $request->input('startH'),
-            'duration' => $request->input('duration'),
+            'endH' => $request->input('endH'),
+            'trainingcourse_id' => $request->input('trainingcourse_id'),
             'sess_id' => $request->input('sess_id'),
+            'subject_id' => $request->input('subject_id'),
         ]);
         $seance->save();
         return response()->json($seance, 201);
