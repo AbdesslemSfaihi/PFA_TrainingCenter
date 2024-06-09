@@ -47,7 +47,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
 
 <VerticalNavLink :item="{
     title: 'Seances',
-    icon: 'ri-book-2-line',
+    icon: 'ri-time-line',
     to: '/seance',
   }" />
 
@@ -81,7 +81,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
   <VerticalNavLink :item="{
     title: 'Session Payment',
     icon: 'ri-money-dollar-circle-line',
-    // to: '/personnes',
+    to: '/payements',
   }" />
 
 </template>

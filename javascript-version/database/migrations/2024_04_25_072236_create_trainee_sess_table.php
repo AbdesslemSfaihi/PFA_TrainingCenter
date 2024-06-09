@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('trainee_sess', function (Blueprint $table) {
             $table->bigInteger('trainee_id')->unsigned();
             $table->bigInteger('sess_id')->unsigned();
-            $table->primary(['trainee_id', 'sess_id']);
+            $table->bigInteger('trainingcourse_id')->unsigned();
+            $table->primary(['trainee_id', 'sess_id', 'trainingcourse_id']);
             $table->foreign('trainee_id')->references('id')->on('trainees');
             $table->foreign('sess_id')->references('id')->on('sesses');
+            $table->foreign('trainingcourse_id')->references('id')->on('training_courses');
             $table->date('paymentDate');
             $table->integer('paidAmount');
-            $table->integer('paymentStatus');
+            $table->string('paymentStatus');
         });
     }
 

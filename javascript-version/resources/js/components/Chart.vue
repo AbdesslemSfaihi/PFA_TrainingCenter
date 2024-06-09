@@ -9,7 +9,11 @@ export default {
   name: 'Chart',
   props: {
     data: Object,
-    options: Object
+    options: Object,
+    chartType: {
+      type: String,
+      default: 'pie' // Default chart type is set to pie
+    }
   },
   mounted() {
     this.renderChart();
@@ -18,7 +22,7 @@ export default {
     renderChart() {
       const ctx = this.$refs.chart.getContext('2d');
       new Chart(ctx, {
-        type: 'bar', // Change this to the type of chart you want
+        type: this.chartType,
         data: this.data,
         options: this.options,
       });

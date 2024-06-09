@@ -12,7 +12,7 @@ class SeanceController extends Controller
      */
     public function index()
     {
-        $seances = Seance::with('sess_id')->get();
+        $seances = Seance::with('sesses')->get();
         return $seances;
     }
 
@@ -28,6 +28,7 @@ class SeanceController extends Controller
             'trainingcourse_id' => $request->input('trainingcourse_id'),
             'sess_id' => $request->input('sess_id'),
             'subject_id' => $request->input('subject_id'),
+            'trainer_id' => $request->input('trainer_id'),
         ]);
         $seance->save();
         return response()->json($seance, 201);

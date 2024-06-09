@@ -4,7 +4,7 @@
     <span class="d-flex align-center">
       &copy;
       {{ new Date().getFullYear() }}
-      Made With
+      Copyright
       <VIcon
         icon="ri-heart-line"
         color="error"
@@ -16,7 +16,7 @@
         target="_blank"
        
         class="text-primary ms-1"
-      >The development team.</a>
+      >MY ACADEMY.</a>
     </span>
     
   </div>

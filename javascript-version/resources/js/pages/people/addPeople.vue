@@ -1,4 +1,6 @@
 <template>
+  <h1>Add a new user</h1>
+  
   <VCard class="custom-card">
     <VForm @submit.prevent="addItem">
       <VRow>

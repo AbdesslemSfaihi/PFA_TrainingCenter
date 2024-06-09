@@ -34,8 +34,8 @@
             <template #item.sess_id="{ item }">
               <div>{{ getSessionName(item.sess_id) }}</div>
             </template>
-            <template #item.trainerId="{ item }">
-              <div>{{ getTrainerName(item.trainerId) }}</div>
+            <template #item.trainer_id="{ item }">
+              <div>{{ getTrainerName(item.trainer_id) }}</div>
             </template>
             <template #item.subject_id="{ item }">
               <div>{{ getSubjectName(item.subject_id) }}</div>
@@ -87,7 +87,7 @@
             </VCol>
             <VCol cols="12" class="mt-2">
               <VTypography variant="subtitle1" class="attribute-name">Trainer :</VTypography>
-              <VTypography class="mt-1 attribute-value">{{ getTrainerName(viewedItem.trainerId) }}</VTypography>
+              <VTypography class="mt-1 attribute-value">{{ getTrainerName(viewedItem.trainer_id) }}</VTypography>
             </VCol>
             <VCol cols="12" class="mt-2">
               <VTypography variant="subtitle1" class="attribute-name">Subject :</VTypography>
@@ -127,10 +127,10 @@
                 <v-select prepend-icon="ri-presentation-line" :items="sessions" v-model="editedItem.sess_id" item-title="name" item-value="id" label="Session" placeholder="Select Session" />
               </VCol>
               <VCol cols="12">
-                <v-select prepend-icon="ri-user-line" :items="trainers" v-model="editedItem.trainerId" item-title="name" item-value="id" label="Trainer" placeholder="Select Trainer" />
+                <v-select prepend-icon="ri-user-line" :items="trainers" v-model="editedItem.trainer_id" item-title="name" item-value="id" label="Trainer" placeholder="Select Trainer" />
               </VCol>
               <VCol cols="12">
-                <v-select prepend-icon="ri-book-line" :items="subjects" v-model="editedItem.subject_id" item-title="name" item-value="id" label="Subject" placeholder="Select Subject" />
+                <v-select prepend-icon="ri-book-line" :items="subjects" v-model="editedItem.subject_id" item-title="Name" item-value="id" label="Subject" placeholder="Select Subject" />
               </VCol>
             </VRow>
           </VContainer>
@@ -169,19 +169,19 @@ const defaultItem = ref({
   startH: '',
   endH: '',
   sess_id: null,
-  trainerId: null,
+  trainer_id: null,
   subject_id: null,
 });
 
 const headers = [
-  { text: 'Training Course', key: 'trainingcourse_id' },
-  { text: 'Date', key: 'date' },
-  { text: 'Start Hour', key: 'startH' },
-  { text: 'End Hour', key: 'endH' },
-  { text: 'Session', key: 'sess_id' },
-  { text: 'Trainer', key: 'trainerId' },
-  { text: 'Subject', key: 'subject_id' },
-  { text: 'Actions', key: 'id' },
+  { text: 'Training Course', value: 'trainingcourse_id' },
+  { text: 'Date', value: 'date' },
+  { text: 'Start Hour', value: 'startH' },
+  { text: 'End Hour', value: 'endH' },
+  { text: 'Session', value: 'sess_id' },
+  { text: 'Trainer', value: 'trainer_id' },
+  { text: 'Subject', value: 'subject_id' },
+  { text: 'Actions', value: 'actions' },
 ];
 
 const seances = ref([]);
@@ -224,7 +224,7 @@ const fetchTrainingCourses = async () => {
 
 const fetchSessions = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/sessions');
+    const response = await axios.get('http://localhost:8000/api/sesses');
     sessions.value = response.data;
   } catch (error) {
     console.error('Error fetching sessions:', error);
@@ -261,7 +261,7 @@ const getSessionName = (id) => {
 
 const getSubjectName = (id) => {
   const subject = subjects.value.find(item => item.id === id);
-  return subject ? subject.name : 'Unknown';
+  return subject ? subject.Name : 'Unknown';
 };
 
 const getTrainerName = (id) => {

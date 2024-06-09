@@ -31,6 +31,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('sesses')
                 ->onDelete('restrict');
+            $table->unsignedBigInteger("trainer_id");
+            $table->foreign('trainer_id')
+                ->references('id')
+                ->on('trainers')
+                ->onDelete('restrict');
             $table->timestamps();
         });
     }

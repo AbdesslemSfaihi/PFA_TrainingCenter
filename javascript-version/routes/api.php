@@ -12,6 +12,7 @@ use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\SubjectModuleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\PaymentController;
 
 
 Route::get('/user', function (Request $request) {
@@ -49,6 +50,11 @@ Route::middleware('api')->group(function () {
 Route::middleware('api')->group(function () {
     Route::resource('subjectmodule', SubjectModuleController::class);
 });
+
+Route::middleware('api')->group(function () {
+    Route::resource('payments', PaymentController::class);
+});
+
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);

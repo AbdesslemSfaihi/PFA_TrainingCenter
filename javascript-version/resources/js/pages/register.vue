@@ -1,4 +1,5 @@
 <template>
+  <div class="container">
   <div class="auth-wrapper d-flex align-center justify-center pa-4">
     <VCard class="auth-card pa-4 pt-7" max-width="448">
       <VCardItem class="justify-center">
@@ -55,11 +56,12 @@
     <VImg :src="authV1Tree2" class="auth-footer-end-tree d-none d-md-block" :width="350" />
     <VImg class="auth-footer-mask d-none d-md-block" :src="authThemeMask" />
   </div>
+</div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import axios from 'axios';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const user = ref({
@@ -97,5 +99,13 @@ const handleSubmit = async () => {
   padding: 20px;
   border: 5px solid #ccc;
   background-color: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30%;
+  height: 100vh; /* Adjust if needed */
 }
 </style>

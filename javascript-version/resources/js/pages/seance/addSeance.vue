@@ -73,7 +73,7 @@
               <v-select
                 prepend-icon="ri-user-line"
                 :items="trainers"
-                v-model="seance.trainerId"
+                v-model="seance.trainer_id"
                 item-title="name"
                 item-value="id"
                 label="Trainer"
@@ -118,7 +118,7 @@ const seance = ref({
   startH: '',
   endH: '',
   sess_id: null,
-  trainerId: null,
+  trainer_id: null,
   subject_id: null,
 });
 const selectedModule = ref(null);
@@ -199,7 +199,7 @@ const filteredSubjects = computed(() => {
 
 // Add seance function
 const addSeance = async () => {
-  if (!seance.value.trainingcourse_id || !seance.value.date || !seance.value.startH || !seance.value.endH || !seance.value.sess_id || !seance.value.trainerId || !seance.value.subject_id) {
+  if (!seance.value.trainingcourse_id || !seance.value.date || !seance.value.startH || !seance.value.endH || !seance.value.sess_id || !seance.value.trainer_id || !seance.value.subject_id) {
     Swal.fire({
       title: 'Error!',
       text: 'Please fill all the required fields',

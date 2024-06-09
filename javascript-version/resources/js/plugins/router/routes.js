@@ -78,6 +78,14 @@ export const routes = [
         component: () => import('@/pages/session/addSession.vue'),
       },
       {
+        path: 'payements',
+        component: () => import('@/pages/payement/payement.vue'),
+      },
+      {
+        path: 'payements/add',
+        component: () => import('@/pages/payement/addPayment.vue'),
+      },
+      {
         path: 'account-settings',
         component: () => import('@/pages/account-settings.vue'),
       },
